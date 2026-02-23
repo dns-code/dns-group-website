@@ -1,3 +1,57 @@
+
+<!--
+╔══════════════════════════════════════════════════════════════════╗
+║  EMAILJS SETUP — 10 minut, zero backendu, darmowy plan = 200    ║
+║  emaili/mies (wystarczy na start)                                ║
+╠══════════════════════════════════════════════════════════════════╣
+║                                                                  ║
+║  KROK 1 — Rejestracja                                            ║
+║  → emailjs.com → Sign up (darmowe, 200 emaili/mies)             ║
+║                                                                  ║
+║  KROK 2 — Email Service                                          ║
+║  → Email Services → Add New Service → Gmail                     ║
+║  → Połącz konto kontakt@dnsgroup.pl                             ║
+║  → Skopiuj "Service ID" → wklej jako EMAILJS_SERVICE_ID         ║
+║                                                                  ║
+║  KROK 3 — Email Template                                         ║
+║  → Email Templates → Create New Template                        ║
+║  → Subject: Nowe zapytanie — {{from_name}} ({{persona}})        ║
+║  → Body (wklej):                                                 ║
+║                                                                  ║
+║  Nowe zapytanie z DNS Group                                      ║
+║  ────────────────────────                                        ║
+║  Imię:    {{from_name}}                                          ║
+║  Email:   {{from_email}}                                         ║
+║  Firma:   {{firma}}                                              ║
+║  Budżet:  {{budzet}}                                             ║
+║  Persona: {{persona}}                                            ║
+║  ────────────────────────                                        ║
+║  Wiadomość:                                                      ║
+║  {{message}}                                                     ║
+║  ────────────────────────                                        ║
+║  Wysłano: {{sent_at}}                                            ║
+║  Strona:  {{page_url}}                                           ║
+║                                                                  ║
+║  → To Email: kontakt@dnsgroup.pl                                 ║
+║  → Reply To: {{reply_to}}                                        ║
+║  → Skopiuj "Template ID" → wklej jako EMAILJS_TEMPLATE_ID       ║
+║                                                                  ║
+║  KROK 4 — Public Key                                             ║
+║  → Account → General → Public Key                               ║
+║  → Skopiuj → wklej jako EMAILJS_PUBLIC_KEY                      ║
+║                                                                  ║
+║  KROK 5 — Wklej 3 wartości w pliku (linia ~365):                ║
+║  const EMAILJS_SERVICE_ID  = 'service_XXXXX';                   ║
+║  const EMAILJS_TEMPLATE_ID = 'template_XXXXX';                  ║
+║  const EMAILJS_PUBLIC_KEY  = 'XXXXXXXXXXXXXXXXXX';              ║
+║                                                                  ║
+║  OPCJONALNIE — Email potwierdzający do klienta:                  ║
+║  → Stwórz drugi template o ID: template_confirmation            ║
+║  → Subject: Otrzymaliśmy Twoje zapytanie — DNS Group            ║
+║  → To Email: {{to_email}}                                        ║
+║  → Treść: Cześć {{to_name}}, dziękujemy za kontakt...           ║
+╚══════════════════════════════════════════════════════════════════╝
+-->
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -261,6 +315,213 @@ section.s{position:relative;z-index:10;padding:110px 64px}
 .form-submit:hover{background:var(--lime);transform:translateY(-2px)}
 .form-note{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:1px;color:var(--muted);text-align:center;margin-top:10px}
 
+/* ═══════════════════════════════
+   ANTI-OBJECTION
+   ═══════════════════════════════ */
+.objection-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);margin-top:60px}
+.objection-card{background:var(--navy-card);padding:44px 40px;position:relative;overflow:hidden;transition:background .3s}
+.objection-card:hover{background:var(--navy-light)}
+.objection-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--accent,var(--cyan));transform:scaleX(0);transform-origin:left;transition:transform .5s}
+.objection-card:hover::after{transform:scaleX(1)}
+.objection-myth{display:flex;gap:12px;align-items:flex-start;margin-bottom:24px;padding:16px;background:rgba(255,61,90,.05);border:1px solid rgba(255,61,90,.12)}
+.objection-myth-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+.objection-myth-label{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--coral);margin-bottom:5px}
+.objection-myth-text{font-size:13px;color:rgba(240,244,255,.55);line-height:1.6;font-style:italic;font-weight:300}
+.objection-reality{display:flex;gap:12px;align-items:flex-start}
+.objection-reality-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+.objection-reality-label{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--lime);margin-bottom:5px}
+.objection-reality-text{font-size:14px;color:rgba(240,244,255,.75);line-height:1.65;font-weight:300}
+.objection-reality-text strong{color:var(--white);font-weight:500}
+
+/* ═══════════════════════════════
+   LOGOS / SOCIAL PROOF
+   ═══════════════════════════════ */
+.logos-section{position:relative;z-index:10;padding:56px 64px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:rgba(0,245,228,.012)}
+.logos-label{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:36px}
+.logos-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:0;background:var(--border)}
+.logo-cell{flex:1;min-width:160px;max-width:220px;background:var(--navy);padding:28px 32px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;transition:background .2s;border:none}
+.logo-cell:hover{background:var(--navy-light)}
+.logo-cell-industry{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-align:center}
+.logo-cell-name{font-family:'Syne',sans-serif;font-weight:800;font-size:15px;color:rgba(240,244,255,.35);text-align:center;letter-spacing:-.3px;transition:color .2s}
+.logo-cell:hover .logo-cell-name{color:rgba(240,244,255,.6)}
+.logo-cell-since{font-family:'Space Mono',monospace;font-size:8px;color:var(--cyan);opacity:.5;letter-spacing:1px}
+
+/* ═══════════════════════════════
+   STICKY CTA BAR
+   ═══════════════════════════════ */
+.sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:rgba(4,7,15,.96);border-top:1px solid rgba(0,245,228,.15);backdrop-filter:blur(24px);padding:14px 64px;display:flex;align-items:center;justify-content:space-between;transform:translateY(100%);transition:transform .4s cubic-bezier(.16,1,.3,1);gap:20px}
+.sticky-bar.visible{transform:translateY(0)}
+.sticky-bar-text{font-size:14px;color:rgba(240,244,255,.6);font-weight:300;flex:1}
+.sticky-bar-text strong{color:var(--white);font-weight:500}
+.sticky-bar-actions{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.sticky-bar-dismiss{background:none;border:none;color:var(--muted);font-size:18px;cursor:none;padding:4px 8px;transition:color .2s;line-height:1}
+.sticky-bar-dismiss:hover{color:var(--white)}
+@media(max-width:768px){
+  .sticky-bar{padding:12px 16px;flex-wrap:wrap}
+  .sticky-bar-text{font-size:13px;width:100%}
+  .objection-grid{grid-template-columns:1fr}
+  .logos-grid{gap:1px}
+  .logo-cell{min-width:140px}
+  .logos-section{padding:40px 20px}
+}
+
+
+
+/* ═══════════════════════════════
+   CASE STUDIES EXPANDED
+   ═══════════════════════════════ */
+.case-expanded{margin-top:60px;display:flex;flex-direction:column;gap:2px;background:var(--border)}
+.case-full{background:var(--navy-card);overflow:hidden}
+.case-full-header{display:grid;grid-template-columns:320px 1fr auto;gap:0;border-bottom:1px solid var(--border);cursor:none;transition:background .2s}
+.case-full-header:hover{background:var(--navy-light)}
+.case-full-industry-cell{padding:32px 36px;border-right:1px solid var(--border);display:flex;flex-direction:column;justify-content:space-between}
+.case-full-num{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);margin-bottom:10px}
+.case-full-industry-name{font-family:'Syne',sans-serif;font-weight:900;font-size:18px;letter-spacing:-.3px;margin-bottom:10px}
+.case-full-tags{display:flex;flex-wrap:wrap;gap:5px}
+.case-full-tag{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:1px;padding:3px 8px;background:var(--cyan-dim);color:var(--cyan);border:1px solid rgba(0,245,228,.12)}
+.case-full-challenge-cell{padding:32px 36px;border-right:1px solid var(--border)}
+.case-full-challenge-label{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:2.5px;text-transform:uppercase;color:var(--coral);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.case-full-challenge-label::before{content:'';width:3px;height:3px;background:var(--coral);border-radius:50%}
+.case-full-title{font-family:'Syne',sans-serif;font-weight:800;font-size:19px;letter-spacing:-.3px;line-height:1.25;margin-bottom:10px}
+.case-full-quote{font-size:13px;font-style:italic;color:rgba(240,244,255,.45);line-height:1.6;font-weight:300}
+.case-full-metrics-cell{padding:32px 36px;display:flex;flex-direction:column;gap:14px;justify-content:center;min-width:200px}
+.case-full-metric{text-align:right}
+.case-full-metric-val{font-family:'Syne',sans-serif;font-weight:900;font-size:28px;letter-spacing:-1px;color:var(--lime);line-height:1}
+.case-full-metric-label{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-top:3px}
+.case-full-toggle{padding:0 28px;display:flex;align-items:center;justify-content:center;border-left:1px solid var(--border);cursor:none}
+.case-toggle-btn{background:none;border:1px solid var(--border);width:36px;height:36px;display:flex;align-items:center;justify-content:center;color:var(--cyan);font-size:18px;font-family:'Space Mono',monospace;cursor:none;transition:all .2s;flex-shrink:0;line-height:1}
+.case-toggle-btn:hover{background:var(--cyan-dim);border-color:var(--cyan)}
+.case-full.open .case-toggle-btn{transform:rotate(45deg);background:var(--cyan-dim);border-color:var(--cyan)}
+.case-full-body{max-height:0;overflow:hidden;transition:max-height .5s cubic-bezier(.16,1,.3,1)}
+.case-full.open .case-full-body{max-height:1200px}
+.case-full-inner{padding:48px 48px 52px;display:grid;grid-template-columns:1fr 1fr;gap:60px;border-top:1px solid var(--border)}
+.case-timeline-section{margin-bottom:0}
+.case-tl-label{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--cyan);margin-bottom:24px;display:flex;align-items:center;gap:10px}
+.case-tl-label::before{content:'';width:24px;height:1px;background:var(--cyan)}
+.case-tl-item{display:flex;gap:0;margin-bottom:0;position:relative}
+.case-tl-item::before{content:'';position:absolute;left:56px;top:36px;bottom:-2px;width:1px;background:rgba(0,245,228,.12)}
+.case-tl-item:last-child::before{display:none}
+.case-tl-month{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--muted);width:56px;flex-shrink:0;padding-top:10px;line-height:1.4}
+.case-tl-dot{width:10px;height:10px;border-radius:50%;background:var(--navy-card);border:2px solid var(--cyan);flex-shrink:0;margin-top:12px;margin-right:16px;position:relative;z-index:1}
+.case-tl-content{padding:8px 0 28px;flex:1}
+.case-tl-action{font-family:'Syne',sans-serif;font-weight:700;font-size:14px;margin-bottom:5px;letter-spacing:-.2px}
+.case-tl-desc{font-size:13px;color:rgba(240,244,255,.5);line-height:1.6;font-weight:300}
+.case-tl-result{display:inline-flex;align-items:center;gap:6px;margin-top:7px;font-family:'Space Mono',monospace;font-size:9px;color:var(--lime);letter-spacing:1px}
+.case-tl-result::before{content:'↑';font-size:11px}
+.case-results-section{}
+.case-results-label{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--lime);margin-bottom:24px;display:flex;align-items:center;gap:10px}
+.case-results-label::before{content:'';width:24px;height:1px;background:var(--lime)}
+.case-results-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border);margin-bottom:28px}
+.case-result-cell{background:var(--navy);padding:22px 22px}
+.case-result-val{font-family:'Syne',sans-serif;font-weight:900;font-size:38px;letter-spacing:-2px;color:var(--lime);line-height:1}
+.case-result-label{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-top:5px}
+.case-result-note{font-size:12px;color:rgba(184,255,0,.5);margin-top:4px;font-weight:300}
+.case-learnings{padding:20px 22px;background:rgba(0,245,228,.03);border:1px solid rgba(0,245,228,.1)}
+.case-learnings-label{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:12px}
+.case-learnings ul{list-style:none;display:flex;flex-direction:column;gap:7px}
+.case-learnings ul li{font-size:13px;color:rgba(240,244,255,.6);display:flex;gap:9px;line-height:1.55;font-weight:300}
+.case-learnings ul li::before{content:'→';color:var(--cyan);font-family:'Space Mono',monospace;font-size:10px;flex-shrink:0;margin-top:2px}
+
+/* ═══════════════════════════════
+   TEAM
+   ═══════════════════════════════ */
+.team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--border);margin-top:60px}
+.team-card{background:var(--navy-card);padding:36px 32px;display:flex;flex-direction:column;position:relative;overflow:hidden;transition:background .3s}
+.team-card:hover{background:var(--navy-light)}
+.team-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent,var(--cyan));transform:scaleX(0);transform-origin:left;transition:transform .4s}
+.team-card:hover::before{transform:scaleX(1)}
+.team-avatar-wrap{width:64px;height:64px;border-radius:50%;background:var(--navy-light);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;margin-bottom:20px;position:relative;transition:border-color .3s}
+.team-card:hover .team-avatar-wrap{border-color:var(--cyan)}
+.team-avatar-initials{font-family:'Syne',sans-serif;font-weight:900;font-size:22px;color:var(--cyan)}
+.team-avatar-role-badge{position:absolute;bottom:-4px;right:-4px;background:var(--navy-card);border:1px solid var(--border);padding:2px 6px;font-family:'Space Mono',monospace;font-size:7px;letter-spacing:1px;text-transform:uppercase;color:var(--cyan)}
+.team-name{font-family:'Syne',sans-serif;font-weight:900;font-size:18px;letter-spacing:-.3px;margin-bottom:4px}
+.team-role{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:14px}
+.team-exp{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:1px;color:var(--muted);margin-bottom:16px;display:flex;align-items:center;gap:6px}
+.team-exp::before{content:'';width:12px;height:1px;background:var(--muted)}
+.team-bio{font-size:13px;color:rgba(240,244,255,.5);line-height:1.7;font-weight:300;flex:1;margin-bottom:18px}
+.team-skills{display:flex;flex-wrap:wrap;gap:5px}
+.team-skill{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:1px;padding:3px 8px;background:rgba(0,245,228,.04);color:var(--muted);border:1px solid rgba(0,245,228,.08);transition:all .2s}
+.team-card:hover .team-skill{color:rgba(0,245,228,.6);border-color:rgba(0,245,228,.15)}
+.team-founder-note{margin-top:40px;padding:32px 40px;background:rgba(0,245,228,.03);border:1px solid rgba(0,245,228,.1);display:grid;grid-template-columns:auto 1fr;gap:32px;align-items:center}
+.team-founder-avatar{width:72px;height:72px;border-radius:50%;background:var(--navy-light);border:2px solid rgba(0,245,228,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.team-founder-initials{font-family:'Syne',sans-serif;font-weight:900;font-size:26px;color:var(--cyan)}
+.team-founder-text{font-size:15px;line-height:1.75;color:rgba(240,244,255,.6);font-style:italic;font-weight:300}
+.team-founder-text strong{color:var(--white);font-weight:500}
+.team-founder-sig{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:10px}
+@media(max-width:1100px){.team-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.team-grid{grid-template-columns:1fr}.case-full-header{grid-template-columns:1fr}.case-full-industry-cell,.case-full-metrics-cell{border-right:none}.case-full-toggle{border-left:none;border-top:1px solid var(--border);padding:16px}.case-full-inner{grid-template-columns:1fr;padding:28px 20px}.team-founder-note{grid-template-columns:1fr}}
+
+/* ═══════════════════════════════
+   PRICING
+   ═══════════════════════════════ */
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);margin-top:60px}
+.pricing-card{background:var(--navy-card);padding:48px 40px;display:flex;flex-direction:column;position:relative;overflow:hidden;transition:background .3s}
+.pricing-card:hover{background:var(--navy-light)}
+.pricing-card.featured{background:var(--navy-light);border:1px solid rgba(0,245,228,.2)}
+.pricing-card.featured::before{content:'Najczęściej wybierany';position:absolute;top:0;left:0;right:0;background:var(--cyan);color:var(--navy);font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;font-weight:700;padding:7px 0;text-align:center}
+.pricing-card.featured{padding-top:58px}
+.pricing-tier{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--cyan);margin-bottom:16px}
+.pricing-name{font-family:'Syne',sans-serif;font-weight:900;font-size:26px;letter-spacing:-.5px;margin-bottom:8px}
+.pricing-desc{font-size:13px;color:rgba(240,244,255,.45);font-weight:300;line-height:1.6;margin-bottom:28px;min-height:52px}
+.pricing-price{margin-bottom:8px}
+.pricing-price-from{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+.pricing-price-val{font-family:'Syne',sans-serif;font-weight:900;font-size:46px;letter-spacing:-2px;line-height:1;color:var(--white)}
+.pricing-price-val span{font-size:18px;color:var(--muted);font-weight:400;letter-spacing:0}
+.pricing-price-note{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-top:6px;margin-bottom:28px}
+.pricing-includes{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--lime);margin-bottom:14px}
+.pricing-features{list-style:none;display:flex;flex-direction:column;gap:9px;flex:1}
+.pricing-features li{font-size:13px;color:rgba(240,244,255,.65);display:flex;gap:10px;align-items:flex-start;line-height:1.5}
+.pricing-features li::before{content:'✓';color:var(--lime);font-family:'Space Mono',monospace;font-size:10px;flex-shrink:0;margin-top:1px}
+.pricing-features li.muted{color:rgba(240,244,255,.3)}
+.pricing-features li.muted::before{content:'—';color:var(--muted)}
+.pricing-cta{margin-top:28px;display:block;text-align:center;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:13px;border:1px solid var(--border);color:var(--muted);text-decoration:none;transition:all .2s}
+.pricing-cta:hover,.pricing-card.featured .pricing-cta{border-color:var(--cyan);color:var(--cyan);background:var(--cyan-dim)}
+.pricing-note{margin-top:32px;padding:20px 28px;background:rgba(0,245,228,.03);border:1px solid var(--border);display:flex;gap:14px;align-items:flex-start}
+.pricing-note-icon{font-size:20px;flex-shrink:0}
+.pricing-note-text{font-size:13px;color:rgba(240,244,255,.5);line-height:1.65;font-weight:300}
+.pricing-note-text strong{color:var(--white);font-weight:500}
+
+/* ═══════════════════════════════
+   FAQ
+   ═══════════════════════════════ */
+.faq-list{display:flex;flex-direction:column;gap:2px;margin-top:56px;background:var(--border)}
+.faq-item{background:var(--navy-card);overflow:hidden;transition:background .2s}
+.faq-item:hover{background:var(--navy-light)}
+.faq-question{width:100%;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:24px 36px;background:none;border:none;color:var(--white);text-align:left;cursor:none;font-family:'Syne',sans-serif;font-weight:700;font-size:17px;letter-spacing:-.2px;line-height:1.35}
+.faq-icon{width:28px;height:28px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:16px;color:var(--cyan);flex-shrink:0;transition:transform .3s,background .2s;line-height:1}
+.faq-item.open .faq-icon{transform:rotate(45deg);background:var(--cyan-dim)}
+.faq-answer{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.16,1,.3,1),padding .3s}
+.faq-answer-inner{padding:0 36px 28px;font-size:14px;line-height:1.8;color:rgba(240,244,255,.58);font-weight:300}
+.faq-answer-inner strong{color:var(--white);font-weight:500}
+.faq-answer-inner ul{margin-top:10px;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+.faq-answer-inner ul li{display:flex;gap:10px;align-items:flex-start}
+.faq-answer-inner ul li::before{content:'→';color:var(--cyan);font-family:'Space Mono',monospace;font-size:10px;flex-shrink:0;margin-top:3px}
+.faq-item.open .faq-answer{max-height:600px}
+
+/* ═══════════════════════════════
+   DNS vs OTHERS
+   ═══════════════════════════════ */
+.comparison-table{margin-top:56px;overflow:hidden;border:1px solid var(--border)}
+.comparison-header{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;background:var(--navy-card);border-bottom:1px solid var(--border)}
+.comparison-col-header{padding:18px 24px;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);border-right:1px solid var(--border)}
+.comparison-col-header:last-child{border-right:none}
+.comparison-col-header.dns{color:var(--cyan);background:rgba(0,245,228,.05)}
+.comparison-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;border-bottom:1px solid rgba(0,245,228,.04);transition:background .2s}
+.comparison-row:hover{background:rgba(0,245,228,.02)}
+.comparison-row:last-child{border-bottom:none}
+.comparison-cell{padding:16px 24px;font-size:13px;line-height:1.5;border-right:1px solid rgba(0,245,228,.04);display:flex;align-items:flex-start;gap:8px}
+.comparison-cell:last-child{border-right:none}
+.comparison-cell.criterion{font-weight:500;color:rgba(240,244,255,.8);font-size:13px}
+.comparison-cell.dns{background:rgba(0,245,228,.03);color:rgba(240,244,255,.85)}
+.comparison-cell.yes::before{content:'✓';color:var(--lime);font-family:'Space Mono',monospace;font-size:11px;flex-shrink:0;margin-top:1px}
+.comparison-cell.no::before{content:'✗';color:var(--coral);font-family:'Space Mono',monospace;font-size:11px;flex-shrink:0;margin-top:1px}
+.comparison-cell.partial::before{content:'~';color:var(--amber);font-family:'Space Mono',monospace;font-size:13px;flex-shrink:0;line-height:1.3}
+@media(max-width:900px){
+  .pricing-grid{grid-template-columns:1fr}
+  .comparison-header,.comparison-row{grid-template-columns:1fr 1fr}
+  .comparison-col-header:nth-child(3),.comparison-col-header:nth-child(4),
+  .comparison-cell:nth-child(3),.comparison-cell:nth-child(4){display:none}
+}
 /* FOOTER */
 footer{position:relative;z-index:10;padding:48px 64px 36px;border-top:1px solid var(--border)}
 .footer-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px}
@@ -305,6 +566,16 @@ footer{position:relative;z-index:10;padding:48px 64px 36px;border-top:1px solid 
   footer{padding:40px 20px 28px}
 }
 </style>
+  <!-- EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    // ── EMAILJS CONFIG ──
+    // Uzupełnij te 3 wartości po rejestracji na emailjs.com (krok 4 w README)
+    const EMAILJS_SERVICE_ID  = 'TWOJ_SERVICE_ID';   // np. 'service_abc123'
+    const EMAILJS_TEMPLATE_ID = 'TWOJ_TEMPLATE_ID';  // np. 'template_xyz789'
+    const EMAILJS_PUBLIC_KEY  = 'TWOJ_PUBLIC_KEY';   // np. 'AbCdEfGhIjKlMnOp'
+    emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+  </script>
 </head>
 <body>
 <div class="cursor" id="cursor"></div>
@@ -317,9 +588,11 @@ footer{position:relative;z-index:10;padding:48px 64px 36px;border-top:1px solid 
   <a href="#" class="logo"><span class="logo-badge">DNS</span>GROUP</a>
   <ul class="nav-links">
     <li><a href="#problem">Dla kogo</a></li>
+    <li><a href="#cennik">Cennik</a></li>
     <li><a href="#branże">Branże</a></li>
     <li><a href="#proces">Proces</a></li>
     <li><a href="#realizacje">Realizacje</a></li>
+    <li><a href="#zespol">Zespół</a></li>
     <li><a href="#kontakt">Kontakt</a></li>
   </ul>
   <a href="#kontakt" class="nav-cta">Bezpłatny audyt</a>
@@ -328,6 +601,7 @@ footer{position:relative;z-index:10;padding:48px 64px 36px;border-top:1px solid 
 <!-- HERO -->
 <section class="hero">
   <div class="hero-eyebrow">8 lat · 45 klientów · 350+ projektów · 90 branż</div>
+  <div id="personaIndicator" style="display:none;opacity:0;transition:opacity .4s;margin-bottom:16px;margin-top:-16px"><span style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:5px 14px;background:rgba(0,245,228,.1);border:1px solid rgba(0,245,228,.2);color:var(--cyan)" id="personaIndicatorText">Tryb: Właściciel MŚP</span></div>
   <h1 class="hero-title">
     <div class="line"><span>Twoi klienci</span></div>
     <div class="line"><span>szukają <span class="accent-cyan glitch" data-text="Ciebie">Ciebie</span></span></div>
@@ -355,8 +629,8 @@ footer{position:relative;z-index:10;padding:48px 64px 36px;border-top:1px solid 
   </div>
 
   <div class="hero-actions">
-    <a href="#kontakt" class="btn-primary"><span>Zamów bezpłatny audyt</span><span>→</span></a>
-    <a href="#branże" class="btn-secondary">Sprawdź dla swojej branży</a>
+    <a href="#kontakt" class="btn-primary" id="heroCta"><span id="heroCtaText">Zamów bezpłatny audyt</span><span>→</span></a>
+    <a href="#branże" class="btn-secondary" id="heroSecondary">Sprawdź dla swojej branży</a>
   </div>
 
   <!-- Stats -->
@@ -822,49 +1096,336 @@ footer{position:relative;z-index:10;padding:48px 64px 36px;border-top:1px solid 
   <div class="s-label">Realizacje</div>
   <div class="reveal">
     <h2 class="s-title">Nie obiecujemy wyników.<br><span class="accent-lime">Pokazujemy je.</span></h2>
-    <p class="s-sub">Każdy case study to konkretny problem, konkretne działania i konkretne liczby. Zero uogólnień.</p>
+    <p class="s-sub">Kliknij case study żeby rozwinąć pełny timeline — co zrobiliśmy w każdym miesiącu i jakie to dało efekty.</p>
   </div>
-  <div class="cases-grid">
-    <div class="case-card reveal">
-      <div class="case-industry">Medycyna estetyczna</div>
-      <div class="case-challenge-label">Wyzwanie</div>
-      <div class="case-challenge">„Jesteśmy na 4. stronie Google mimo 5 lat działalności. Konkurencja otwarta rok temu jest wyżej."</div>
-      <div class="case-title">Klinika estetyczna Warszawa — od strony 4 do Top 3</div>
-      <div class="case-desc">Audyt ujawnił 3 krytyczne błędy techniczne blokujące indeksowanie, brak lokalnych fraz i zerowe E-E-A-T. W 6 miesięcy przeprowadziliśmy pełną przebudowę architektury contentowej i kampanię Ads na zabiegi high-margin.</div>
-      <div class="case-metrics">
-        <div class="case-metric"><div class="case-metric-val">+340%</div><div class="case-metric-label">Ruch organiczny</div></div>
-        <div class="case-metric"><div class="case-metric-val">4,2×</div><div class="case-metric-label">ROAS z Ads</div></div>
-        <div class="case-metric"><div class="case-metric-val">+280%</div><div class="case-metric-label">Zapytania</div></div>
+  <div class="case-expanded">
+
+    <!-- CASE 1 — Medycyna estetyczna -->
+    <div class="case-full reveal" id="case-1">
+      <div class="case-full-header" onclick="toggleCase('case-1')">
+        <div class="case-full-industry-cell">
+          <div>
+            <div class="case-full-num">01</div>
+            <div class="case-full-industry-name">Medycyna estetyczna</div>
+            <div class="case-full-tags">
+              <span class="case-full-tag">SEO lokalny</span>
+              <span class="case-full-tag">Google Ads</span>
+              <span class="case-full-tag">E-E-A-T</span>
+            </div>
+          </div>
+        </div>
+        <div class="case-full-challenge-cell">
+          <div class="case-full-challenge-label">Wyzwanie</div>
+          <div class="case-full-title">Klinika estetyczna Warszawa — od strony 4 do Top 3</div>
+          <div class="case-full-quote">„Jesteśmy na 4. stronie Google mimo 5 lat działalności. Konkurencja otwarta rok temu jest wyżej od nas."</div>
+        </div>
+        <div class="case-full-metrics-cell">
+          <div class="case-full-metric"><div class="case-full-metric-val">+340%</div><div class="case-full-metric-label">Ruch organic</div></div>
+          <div class="case-full-metric"><div class="case-full-metric-val">4,2×</div><div class="case-full-metric-label">ROAS Ads</div></div>
+        </div>
+        <div class="case-full-toggle"><button class="case-toggle-btn">+</button></div>
       </div>
-      <div class="case-timeline">⏱ Czas realizacji: 6 miesięcy · Budżet Ads: 8.000 PLN/mies</div>
+      <div class="case-full-body">
+        <div class="case-full-inner">
+          <div class="case-timeline-section">
+            <div class="case-tl-label">Timeline działań</div>
+            <div class="case-tl-item">
+              <div class="case-tl-month">Tyg. 1–2</div>
+              <div class="case-tl-dot"></div>
+              <div class="case-tl-content">
+                <div class="case-tl-action">Audyt techniczny — 3 krytyczne błędy</div>
+                <div class="case-tl-desc">Crawl ujawnił zduplikowane meta tagi na 80% stron, brak schema markup dla lekarzy i kliniki, strona blokowana przez robots.txt na środowisku staging które zostało przypadkowo zindeksowane.</div>
+              </div>
+            </div>
+            <div class="case-tl-item">
+              <div class="case-tl-month">Mies. 1</div>
+              <div class="case-tl-dot"></div>
+              <div class="case-tl-content">
+                <div class="case-tl-action">Fix techniczny + Google Business Profile</div>
+                <div class="case-tl-desc">Usunięcie duplikatów, wdrożenie schema MedicalBusiness + Physician, optymalizacja GBP z kategoriami zabiegów, zebranie 18 nowych recenzji przez kampanię SMS.</div>
+                <div class="case-tl-result">GBP: z 3,8 do 4,7★ (42 opinie)</div>
+              </div>
+            </div>
+            <div class="case-tl-item">
+              <div class="case-tl-month">Mies. 2–3</div>
+              <div class="case-tl-dot"></div>
+              <div class="case-tl-content">
+                <div class="case-tl-action">Architektura contentowa + 12 stron usług</div>
+                <div class="case-tl-desc">Stworzyliśmy dedykowane strony dla każdego zabiegu high-margin (botoks, kwas hialuronowy, lipoliza, implanty). Każda z intencją lokalną: „botoks Warszawa Mokotów", unikalnym contentem i FAQ z pytaniami pacjentów.</div>
+                <div class="case-tl-result">Pierwsze frazy wchodzą na str. 2–3</div>
+              </div>
+            </div>
+            <div class="case-tl-item">
+              <div class="case-tl-month">Mies. 3</div>
+              <div class="case-tl-dot"></div>
+              <div class="case-tl-content">
+                <div class="case-tl-action">Uruchomienie Google Ads — tylko zabiegi premium</div>
+                <div class="case-tl-desc">Kampanie wyłącznie na zabiegi z marżą 60%+. Negative keywords: wszystkie frazy informacyjne i cenowe. Budżet 8 000 PLN/mies skoncentrowany na 6 grupach reklam.</div>
+                <div class="case-tl-result">Pierwsze leady z Ads: 24/mies przy CPC 42 zł</div>
+              </div>
+            </div>
+            <div class="case-tl-item">
+              <div class="case-tl-month">Mies. 4–6</div>
+              <div class="case-tl-dot"></div>
+              <div class="case-tl-content">
+                <div class="case-tl-action">Link building branżowy + optymalizacja Ads</div>
+                <div class="case-tl-desc">14 linków z portali medycznych i lifestyle (Medonet, Healthee, blogerzy beauty). Optymalizacja Ads: obniżenie CPC do 31 zł przez rozbudowę listy negative keywords i poprawę Quality Score landing pages.</div>
+                <div class="case-tl-result">Top 3 na 22 frazach lokalnych</div>
+              </div>
+            </div>
+          </div>
+          <div class="case-results-section">
+            <div class="case-results-label">Wyniki po 6 miesiącach</div>
+            <div class="case-results-grid">
+              <div class="case-result-cell"><div class="case-result-val">+340%</div><div class="case-result-label">Ruch organiczny</div><div class="case-result-note">z 820 do 3 588 sesji/mies</div></div>
+              <div class="case-result-cell"><div class="case-result-val">+280%</div><div class="case-result-label">Zapytania online</div><div class="case-result-note">z 18 do 68 zapytań/mies</div></div>
+              <div class="case-result-cell"><div class="case-result-val">4,2×</div><div class="case-result-label">ROAS Google Ads</div><div class="case-result-note">przy budżecie 8 000 PLN</div></div>
+              <div class="case-result-cell"><div class="case-result-val">Top 3</div><div class="case-result-label">Pozycje lokalne</div><div class="case-result-note">22 frazy · mapy Google</div></div>
+            </div>
+            <div class="case-learnings">
+              <div class="case-learnings-label">Kluczowe wnioski</div>
+              <ul>
+                <li>Blokada robots.txt z środowiska staging może zniszczyć całe SEO domeny — pierwsze co sprawdzamy</li>
+                <li>W medycynie estetycznej Google Maps > pozycje organiczne — 60% zapytań zaczyna się od map</li>
+                <li>Ads tylko na zabiegi high-margin — reklama „konsultacji za 0 zł" generuje leady niskiej jakości</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="case-card reveal reveal-d1">
-      <div class="case-industry">E-commerce</div>
-      <div class="case-challenge-label">Wyzwanie</div>
-      <div class="case-challenge">„Mamy 2400 produktów, każdy z domyślnym opisem od producenta. Allegro zjada nasz traffic."</div>
-      <div class="case-title">Sklep elektroniczny — organiczne przychody ×5 w rok</div>
-      <div class="case-desc">Stworzyliśmy unikalny content dla 2400 produktów (priorytetyzacja wg marży), wdrożyliśmy schema markup i Performance Max z własnym feedem. Frazy long-tail niedostępne na Allegro stały się głównym kanałem ruchu.</div>
-      <div class="case-metrics">
-        <div class="case-metric"><div class="case-metric-val">+520%</div><div class="case-metric-label">Przychód organic</div></div>
-        <div class="case-metric"><div class="case-metric-val">Top 3</div><div class="case-metric-label">68 fraz kluczowych</div></div>
-        <div class="case-metric"><div class="case-metric-val">3,8×</div><div class="case-metric-label">ROAS Shopping</div></div>
+    <!-- CASE 2 — E-commerce -->
+    <div class="case-full reveal" id="case-2">
+      <div class="case-full-header" onclick="toggleCase('case-2')">
+        <div class="case-full-industry-cell">
+          <div>
+            <div class="case-full-num">02</div>
+            <div class="case-full-industry-name">E-commerce elektronika</div>
+            <div class="case-full-tags">
+              <span class="case-full-tag">SEO produktowe</span>
+              <span class="case-full-tag">Shopping Ads</span>
+              <span class="case-full-tag">Performance Max</span>
+            </div>
+          </div>
+        </div>
+        <div class="case-full-challenge-cell">
+          <div class="case-full-challenge-label">Wyzwanie</div>
+          <div class="case-full-title">Sklep elektroniczny — organiczne przychody ×5 w rok</div>
+          <div class="case-full-quote">„Mamy 2400 produktów, każdy z domyślnym opisem od producenta. Allegro zjada nasz traffic na każdej frazie."</div>
+        </div>
+        <div class="case-full-metrics-cell">
+          <div class="case-full-metric"><div class="case-full-metric-val">+520%</div><div class="case-full-metric-label">Przychód organic</div></div>
+          <div class="case-full-metric"><div class="case-full-metric-val">3,8×</div><div class="case-full-metric-label">ROAS Shopping</div></div>
+        </div>
+        <div class="case-full-toggle"><button class="case-toggle-btn">+</button></div>
       </div>
-      <div class="case-timeline">⏱ Czas realizacji: 12 miesięcy · Budżet Ads: 15.000 PLN/mies</div>
+      <div class="case-full-body">
+        <div class="case-full-inner">
+          <div class="case-timeline-section">
+            <div class="case-tl-label">Timeline działań</div>
+            <div class="case-tl-item">
+              <div class="case-tl-month">Mies. 1</div>
+              <div class="case-tl-dot"></div>
+              <div class="case-tl-content">
+                <div class="case-tl-action">Audyt + priorytetyzacja 2400 produktów wg marży</div>
+                <div class="case-tl-desc">Podzieliliśmy katalog na 3 grupy: A (marża 40%+, 180 produktów), B (marża 20–40%, 620 produktów), C (reszta). Strategia SEO tylko dla grup A i B — C generowało 70% ruchu ale 12% przychodów.</div>
+              </div>
+            </div>
+            <div class="case-tl-item">
+              <div class="case-tl-month">Mies. 2–4</div>
+              <div class="case-tl-dot"></div>
+              <div class="case-tl-content">
+                <div class="case-tl-action">Unikalne opisy dla 180 produktów grupy A</div>
+                <div class="case-tl-desc">Każdy opis pisany pod search intent: specyfikacje dla technika, zastosowania dla końcowego użytkownika, porównanie z konkurentami. Schema Product + Review + BreadcrumbList na każdej stronie produktowej.</div>
+                <div class="case-tl-result">Pierwsze produkty wchodzą w Top 10</div>
+              </div>
+            </div>
+            <div class="case-tl-item">
+              <div class="case-tl-month">Mies. 3</div>
+              <div class="case-tl-dot"></div>
+              <div class="case-tl-content">
+                <div class="case-tl-action">Przebudowa kampanii Shopping + Performance Max</div>
+                <div class="case-tl-desc">Nowy feed produktowy z enriched titles i opisami. Podział kampanii: Standard Shopping dla grupy A (manual CPC), Performance Max dla grupy B. ROAS target: 4× dla A, 3× dla B.</div>
+                <div class="case-tl-result">ROAS w pierwszym miesiącu: 2,8×</div>
+              </div>
+            </div>
+            <div class="case-tl-item">
+              <div class="case-tl-month">Mies. 5–8</div>
+              <div class="case-tl-dot"></div>
+              <div class="case-tl-content">
+                <div class="case-tl-action">620 opisów grupy B + Core Web Vitals</div>
+                <div class="case-tl-desc">Rozszerzenie contentu na grupę B. Równolegle: optymalizacja CWV — LCP z 4,8s do 1,9s przez lazy loading i WebP, CLS do 0,04 przez rezerwację przestrzeni dla obrazów.</div>
+                <div class="case-tl-result">Google PageSpeed: 42 → 91 (mobile)</div>
+              </div>
+            </div>
+            <div class="case-tl-item">
+              <div class="case-tl-month">Mies. 9–12</div>
+              <div class="case-tl-dot"></div>
+              <div class="case-tl-content">
+                <div class="case-tl-action">Content poradnikowy + link building</div>
+                <div class="case-tl-desc">16 artykułów poradnikowych ("jak wybrać X", "X vs Y — porównanie") z linkacją do produktów grupy A. 8 linków z branżowych mediów technicznych. Efekt: authority kategorii rośnie, produkty windowane grupowo.</div>
+                <div class="case-tl-result">68 fraz w Top 3, 180+ w Top 10</div>
+              </div>
+            </div>
+          </div>
+          <div class="case-results-section">
+            <div class="case-results-label">Wyniki po 12 miesiącach</div>
+            <div class="case-results-grid">
+              <div class="case-result-cell"><div class="case-result-val">+520%</div><div class="case-result-label">Przychód organic</div><div class="case-result-note">z 48k do 298k PLN/mies</div></div>
+              <div class="case-result-cell"><div class="case-result-val">3,8×</div><div class="case-result-label">ROAS Shopping</div><div class="case-result-note">przy budżecie 15k PLN</div></div>
+              <div class="case-result-cell"><div class="case-result-val">68</div><div class="case-result-label">Fraz w Top 3</div><div class="case-result-note">180+ fraz w Top 10</div></div>
+              <div class="case-result-cell"><div class="case-result-val">91</div><div class="case-result-label">PageSpeed mobile</div><div class="case-result-note">było: 42 punkty</div></div>
+            </div>
+            <div class="case-learnings">
+              <div class="case-learnings-label">Kluczowe wnioski</div>
+              <ul>
+                <li>SEO dla e-commerce bez priorytetyzacji wg marży to przepalanie budżetu — 20% produktów generuje 80% wartości</li>
+                <li>Core Web Vitals w e-commerce mają bezpośredni wpływ na konwersję — każda sekunda LCP to -7% konwersji</li>
+                <li>Allegro nie zaadresuje fraz long-tail z intencją ekspercką — tam jest niezagospodarowana przestrzeń</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="case-card reveal reveal-d2">
-      <div class="case-industry">Nieruchomości</div>
-      <div class="case-challenge-label">Wyzwanie</div>
-      <div class="case-challenge">„Płacimy 800 zł za lead na portalach. Ten sam lead dostają 3 nasze konkurencje jednocześnie."</div>
-      <div class="case-title">Deweloper premium — własny lejek leadów zamiast portali</div>
-      <div class="case-desc">Zbudowaliśmy niezależny lejek: kampanie Ads na frazy intencyjne → dedykowane landing pages per inwestycja → formularz kwalifikacyjny → integracja z CRM. Leady exclusive, z wyższą jakością niż portale.</div>
-      <div class="case-metrics">
-        <div class="case-metric"><div class="case-metric-val">-68%</div><div class="case-metric-label">Koszt leadu</div></div>
-        <div class="case-metric"><div class="case-metric-val">+180%</div><div class="case-metric-label">Konwersja lead→spotkanie</div></div>
-        <div class="case-metric"><div class="case-metric-val">0 portali</div><div class="case-metric-label">Niezależność od Otodom/OLX</div></div>
+    <!-- CASE 3 — Nieruchomości -->
+    <div class="case-full reveal" id="case-3">
+      <div class="case-full-header" onclick="toggleCase('case-3')">
+        <div class="case-full-industry-cell">
+          <div>
+            <div class="case-full-num">03</div>
+            <div class="case-full-industry-name">Nieruchomości premium</div>
+            <div class="case-full-tags">
+              <span class="case-full-tag">Lead gen</span>
+              <span class="case-full-tag">Google Ads</span>
+              <span class="case-full-tag">Landing pages</span>
+            </div>
+          </div>
+        </div>
+        <div class="case-full-challenge-cell">
+          <div class="case-full-challenge-label">Wyzwanie</div>
+          <div class="case-full-title">Deweloper premium — własny lejek leadów zamiast portali</div>
+          <div class="case-full-quote">„Płacimy 800 zł za lead na portalach. Ten sam lead trafia jednocześnie do 3 naszych konkurencji."</div>
+        </div>
+        <div class="case-full-metrics-cell">
+          <div class="case-full-metric"><div class="case-full-metric-val">-68%</div><div class="case-full-metric-label">Koszt leadu</div></div>
+          <div class="case-full-metric"><div class="case-full-metric-val">+180%</div><div class="case-full-metric-label">Lead→spotkanie</div></div>
+        </div>
+        <div class="case-full-toggle"><button class="case-toggle-btn">+</button></div>
       </div>
-      <div class="case-timeline">⏱ Czas realizacji: 4 miesiące · Budżet Ads: 12.000 PLN/mies</div>
+      <div class="case-full-body">
+        <div class="case-full-inner">
+          <div class="case-timeline-section">
+            <div class="case-tl-label">Timeline działań</div>
+            <div class="case-tl-item">
+              <div class="case-tl-month">Tyg. 1–3</div>
+              <div class="case-tl-dot"></div>
+              <div class="case-tl-content">
+                <div class="case-tl-action">Analiza fraz i mapa lejka zakupowego</div>
+                <div class="case-tl-desc">Mapowanie search intent: fazy świadomości ("mieszkania Kraków"), rozważania ("apartament Kraków cena m2"), decyzji ("apartament Zabłocie kupię"). Każda faza wymaga innego komunikatu i landing page.</div>
+              </div>
+            </div>
+            <div class="case-tl-item">
+              <div class="case-tl-month">Mies. 1</div>
+              <div class="case-tl-dot"></div>
+              <div class="case-tl-content">
+                <div class="case-tl-action">3 dedykowane landing pages per inwestycja</div>
+                <div class="case-tl-desc">Każda inwestycja = osobny LP z: wizualizacjami 3D, kalkulatorem raty, formularzem kwalifikacyjnym (3 pytania filtrujące gotowość zakupu), mapą lokalizacji. A/B test: LP z kalkulatorem vs bez.</div>
+                <div class="case-tl-result">LP z kalkulatorem: CVR 4,2% vs 1,8%</div>
+              </div>
+            </div>
+            <div class="case-tl-item">
+              <div class="case-tl-month">Mies. 2</div>
+              <div class="case-tl-dot"></div>
+              <div class="case-tl-content">
+                <div class="case-tl-action">Uruchomienie kampanii Ads — frazy intencyjne</div>
+                <div class="case-tl-desc">Kampanie wyłącznie na frazy zakupowe i lokalizacyjne. Zero fraz ogólnych ("nieruchomości"). Rozszerzone dopasowanie z pełną listą negatives. Remarketing na osoby które odwiedziły LP ale nie wypełniły formularza.</div>
+                <div class="case-tl-result">Pierwsze leady exclusive: 34/mies przy CPL 260 zł</div>
+              </div>
+            </div>
+            <div class="case-tl-item">
+              <div class="case-tl-month">Mies. 3–4</div>
+              <div class="case-tl-dot"></div>
+              <div class="case-tl-content">
+                <div class="case-tl-action">Integracja z CRM + kwalifikacja leadów</div>
+                <div class="case-tl-desc">Automatyczny scoring leadów na podstawie odpowiedzi z formularza: budżet, termin zakupu, typ mieszkania. Handoff do sprzedaży tylko dla leadów score 7+/10. Gorące leady — powiadomienie SMS do handlowca w 2 min.</div>
+                <div class="case-tl-result">Konwersja lead→spotkanie: 12% → 34%</div>
+              </div>
+            </div>
+          </div>
+          <div class="case-results-section">
+            <div class="case-results-label">Wyniki po 4 miesiącach</div>
+            <div class="case-results-grid">
+              <div class="case-result-cell"><div class="case-result-val">-68%</div><div class="case-result-label">Koszt leadu</div><div class="case-result-note">z 800 zł do 256 zł CPL</div></div>
+              <div class="case-result-cell"><div class="case-result-val">100%</div><div class="case-result-label">Leady exclusive</div><div class="case-result-note">zero portali, zero współdzielenia</div></div>
+              <div class="case-result-cell"><div class="case-result-val">+180%</div><div class="case-result-label">Lead→spotkanie</div><div class="case-result-note">z 12% do 34% konwersji</div></div>
+              <div class="case-result-cell"><div class="case-result-val">4,2×</div><div class="case-result-label">ROI kampanii</div><div class="case-result-note">przy budżecie 12k PLN/mies</div></div>
+            </div>
+            <div class="case-learnings">
+              <div class="case-learnings-label">Kluczowe wnioski</div>
+              <ul>
+                <li>Kalkulator raty na LP podwaja konwersję — kupujący nieruchomości zawsze kalkulują zdolność kredytową</li>
+                <li>Kwalifikacja leadów przed handoffem do sprzedaży ważniejsza niż generowanie dużej ilości — jakość > ilość</li>
+                <li>2-minutowy czas odpowiedzi na gorący lead zwiększa skuteczność kontaktu 7× vs odpowiedź po godzinie</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- TEAM -->
+<section class="s s-bg" id="zespol">
+  <div class="s-label">Zespół</div>
+  <div class="reveal">
+    <h2 class="s-title">Ludzie za<br><span class="accent-cyan">Twoimi wynikami</span></h2>
+    <p class="s-sub">Nie pracujesz z agencją — pracujesz z konkretnymi osobami. Oto kto będzie odpowiadał za Twój projekt.</p>
+  </div>
+  <div class="team-grid">
+    <div class="team-card reveal" style="--accent:var(--cyan)">
+      <div class="team-avatar-wrap"><div class="team-avatar-initials">NB</div><div class="team-avatar-role-badge">CEO</div></div>
+      <div class="team-name">Norbert B.</div>
+      <div class="team-role">CEO / Założyciel</div>
+      <div class="team-exp">8 lat w digital marketingu</div>
+      <div class="team-bio">Założył DNS Group w 2016 roku. Nadzoruje strategię klientów i rozwój agencji. Prywatnie: inwestor, entuzjasta technologii. Odpowiada za to że agencja dowozi — nie tylko obiecuje.</div>
+      <div class="team-skills"><span class="team-skill">Strategia</span><span class="team-skill">Google Ads</span><span class="team-skill">Business Dev</span></div>
+    </div>
+    <div class="team-card reveal reveal-d1" style="--accent:var(--lime)">
+      <div class="team-avatar-wrap"><div class="team-avatar-initials">MK</div><div class="team-avatar-role-badge">SEO</div></div>
+      <div class="team-name">Marcin K.</div>
+      <div class="team-role">Head of SEO</div>
+      <div class="team-exp">13 lat doświadczenia w SEO</div>
+      <div class="team-bio">Specjalizuje się w SEO technicznym i strategiach dla e-commerce. Prowadzi klientów z branży medycznej, e-commerce i B2B. Jeden z nielicznych polskich specjalistów z certyfikatem Google Search.</div>
+      <div class="team-skills"><span class="team-skill">Technical SEO</span><span class="team-skill">E-commerce</span><span class="team-skill">Core Web Vitals</span><span class="team-skill">Link Building</span></div>
+    </div>
+    <div class="team-card reveal reveal-d2" style="--accent:var(--amber)">
+      <div class="team-avatar-wrap"><div class="team-avatar-initials">AW</div><div class="team-avatar-role-badge">ADS</div></div>
+      <div class="team-name">Anna W.</div>
+      <div class="team-role">Senior Google Ads Specialist</div>
+      <div class="team-exp">6 lat · zarządzała budżetami 2M+ PLN/rok</div>
+      <div class="team-bio">Zarządzała kampaniami dla klientów z branży medycznej, nieruchomości i e-commerce. Specjalistka od Performance Max i Shopping Ads. Certyfikowana przez Google w 4 specjalizacjach.</div>
+      <div class="team-skills"><span class="team-skill">Performance Max</span><span class="team-skill">Shopping Ads</span><span class="team-skill">Analityka GA4</span></div>
+    </div>
+    <div class="team-card reveal reveal-d3" style="--accent:var(--coral)">
+      <div class="team-avatar-wrap"><div class="team-avatar-initials">PD</div><div class="team-avatar-role-badge">DEV</div></div>
+      <div class="team-name">Piotr D.</div>
+      <div class="team-role">Lead Developer</div>
+      <div class="team-exp">7 lat · WordPress, Next.js, WooCommerce</div>
+      <div class="team-bio">Odpowiada za stronę techniczną klientów — Core Web Vitals, migracje, landing pages. Rozumie SEO od strony kodu, co sprawia że poprawki techniczne są wdrażane w dni, nie tygodnie.</div>
+      <div class="team-skills"><span class="team-skill">WordPress</span><span class="team-skill">Next.js</span><span class="team-skill">CWV</span><span class="team-skill">WooCommerce</span></div>
+    </div>
+  </div>
+  <div class="team-founder-note reveal">
+    <div class="team-founder-avatar"><div class="team-founder-initials">NB</div></div>
+    <div>
+      <div class="team-founder-text">„Budowałem DNS przez 8 lat z jednym założeniem: <strong>nigdy nie brać klienta na którego nie jesteśmy w stanie dowieźć wyników</strong>. To znaczy że czasem odmawiamy — i to jest w porządku. Wolę mieć 45 klientów którym naprawdę pomagamy, niż 200 którym obiecujemy i nie wykonujemy."</div>
+      <div class="team-founder-sig">Norbert B. · CEO DNS Group · od 2016</div>
     </div>
   </div>
 </section>
@@ -898,14 +1459,381 @@ footer{position:relative;z-index:10;padding:48px 64px 36px;border-top:1px solid 
   </div>
 </section>
 
+
+
+<!-- PRICING -->
+<section class="s" id="cennik">
+  <div class="s-label">Cennik</div>
+  <div class="reveal">
+    <h2 class="s-title">Transparentne widełki.<br><span class="accent-cyan">Bez "zależy i oddzwonimy".</span></h2>
+    <p class="s-sub">Większość agencji ukrywa ceny żeby "wycenić indywidualnie". My pokazujemy widełki — żebyś wiedział czy w ogóle mamy sens dla Twojego budżetu.</p>
+  </div>
+  <div class="pricing-grid">
+    <div class="pricing-card reveal">
+      <div class="pricing-tier">Start</div>
+      <div class="pricing-name">SEO lub Ads</div>
+      <div class="pricing-desc">Jeden kanał, pełne wdrożenie. Dla firm które dopiero zaczynają budować obecność online.</div>
+      <div class="pricing-price">
+        <div class="pricing-price-from">od</div>
+        <div class="pricing-price-val">2 500<span> PLN/mies</span></div>
+      </div>
+      <div class="pricing-price-note">+ jednorazowy setup: 1 500–3 000 PLN</div>
+      <div class="pricing-includes">Co obejmuje</div>
+      <ul class="pricing-features">
+        <li>Audyt techniczny SEO lub konfiguracja Ads</li>
+        <li>Strategia i plan działań na 90 dni</li>
+        <li>Optymalizacja 10–20 kluczowych stron</li>
+        <li>2–4 artykuły eksperckie miesięcznie</li>
+        <li>Raport miesięczny z wynikami</li>
+        <li>Jeden dedykowany opiekun (senior)</li>
+        <li class="muted">Obsługa dwóch kanałów jednocześnie</li>
+        <li class="muted">Raport kwartalny strategiczny</li>
+      </ul>
+      <a href="#kontakt" class="pricing-cta">Zapytaj o wycenę</a>
+    </div>
+    <div class="pricing-card featured reveal reveal-d1">
+      <div class="pricing-tier">Growth</div>
+      <div class="pricing-name">SEO + Google Ads</div>
+      <div class="pricing-desc">Dwa kanały, pełna synergia. SEO buduje długoterminową pozycję, Ads generuje natychmiastowy ruch.</div>
+      <div class="pricing-price">
+        <div class="pricing-price-from">od</div>
+        <div class="pricing-price-val">5 500<span> PLN/mies</span></div>
+      </div>
+      <div class="pricing-price-note">+ budżet reklamowy (min. 3 000 PLN/mies)</div>
+      <div class="pricing-includes">Co obejmuje</div>
+      <ul class="pricing-features">
+        <li>Pełny audyt SEO + konfiguracja Ads</li>
+        <li>Strategia cross-channel SEO + Ads</li>
+        <li>Optymalizacja 30–50 stron miesięcznie</li>
+        <li>4–8 artykułów eksperckich miesięcznie</li>
+        <li>Link building (3–5 linków/mies)</li>
+        <li>Optymalizacja Ads co 2 tygodnie</li>
+        <li>Raport bi-weekly + miesięczny</li>
+        <li>Raport kwartalny strategiczny dla zarządu</li>
+      </ul>
+      <a href="#kontakt" class="pricing-cta">Zapytaj o wycenę</a>
+    </div>
+    <div class="pricing-card reveal reveal-d2">
+      <div class="pricing-tier">Partner</div>
+      <div class="pricing-name">Full Digital</div>
+      <div class="pricing-desc">Kompleksowa obsługa marketingu cyfrowego. SEO, Ads, content, strona WWW, analityka — jeden partner.</div>
+      <div class="pricing-price">
+        <div class="pricing-price-from">od</div>
+        <div class="pricing-price-val">10 000<span> PLN/mies</span></div>
+      </div>
+      <div class="pricing-price-note">+ budżet reklamowy (ustalany indywidualnie)</div>
+      <div class="pricing-includes">Co obejmuje</div>
+      <ul class="pricing-features">
+        <li>Wszystko z pakietu Growth</li>
+        <li>Obsługa strony WWW i landing pages</li>
+        <li>AI-powered content i kampanie</li>
+        <li>Dedykowany zespół (SEO + Ads + Dev)</li>
+        <li>Priorytetowy czas reakcji (4h)</li>
+        <li>Weekly sync z teamem</li>
+        <li>Strategia na 12 miesięcy z rewizją kwartalną</li>
+        <li>Dostęp do wszystkich narzędzi DNS</li>
+      </ul>
+      <a href="#kontakt" class="pricing-cta">Zapytaj o wycenę</a>
+    </div>
+  </div>
+  <div class="pricing-note reveal">
+    <div class="pricing-note-icon">💡</div>
+    <div class="pricing-note-text">
+      <strong>Dlaczego widełki, a nie stała cena?</strong> Zakres zależy od branży, konkurencyjności fraz i stanu technicznego strony. Sklep z 5 000 produktów wymaga innego nakładu niż strona wizytówka. Na pierwszym spotkaniu dostajesz konkretną wycenę — nie "zależy". <strong>Nie współpracujemy z firmami dla których nasze stawki są nieosiągalne</strong> — lepiej powiedzieć to wprost niż marnować Twój czas.
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="s s-bg" id="faq">
+  <div class="s-label">FAQ</div>
+  <div class="reveal">
+    <h2 class="s-title">Pytania które zadają<br><span class="accent-cyan">przed podpisaniem umowy</span></h2>
+    <p class="s-sub">Zebraliśmy najczęstsze pytania z rozmów z klientami. Odpowiadamy bez owijania w bawełnę.</p>
+  </div>
+  <div class="faq-list reveal">
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        <span>Ile czasu mija zanim zobaczę efekty SEO?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer"><div class="faq-answer-inner">
+        Uczciwa odpowiedź: <strong>pierwsze ruchy w pozycjach widoczne po 6–10 tygodniach</strong>, wyraźny wzrost ruchu po 3–4 miesiącach, docelowe pozycje w Top 3 po 6–12 miesiącach. Zależy to od trzech czynników: jak duża jest konkurencja na Twoich frazach, jaki jest aktualny stan techniczny strony i jakie masz zaplecze contentowe. Na audycie wstępnym pokazujemy konkretną prognozę dla Twojej domeny.
+      </div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        <span>Co się dzieje z moją pozycją jeśli zakończę współpracę?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer"><div class="faq-answer-inner">
+        <strong>Wszystkie efekty SEO zostają Twoje.</strong> Pozycje w Google, opublikowany content, pozyskane linki, optymalizacja techniczna — to aktywa na Twojej domenie. Nie znikają po zakończeniu współpracy. Inaczej niż Google Ads — gdy wyłączysz kampanię, ruch zatrzymuje się natychmiast. SEO to inwestycja w aktywa, Ads to wynajem ruchu.
+      </div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        <span>Kto jest właścicielem konta Google Ads i czy mogę zabrać historię?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer"><div class="faq-answer-inner">
+        <strong>Konto Google Ads zawsze jest Twoje.</strong> Zakładamy je na Twój adres email lub przejmujemy dostęp do istniejącego konta jako menedżer. Przy zakończeniu współpracy — odbierasz nam dostęp, wszystkie kampanie, historię, wyniki i dane pozostają u Ciebie. Nie stosujemy praktyki tworzenia kont "na agencji" — to Twoje dane i Twoja historia optymalizacji.
+      </div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        <span>Czy gwarantujecie pozycję nr 1 w Google?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer"><div class="faq-answer-inner">
+        <strong>Nie.</strong> Żadna agencja nie powinna gwarantować konkretnej pozycji — algorytm Google jest poza kontrolą kogokolwiek. Agencje które to obiecują, albo kłamią, albo planują pozycjonować Cię na frazy których nikt nie szuka. Co gwarantujemy: konkretne działania z harmonogramem, przejrzyste raportowanie i otwartą rozmowę gdy coś nie idzie zgodnie z planem.
+      </div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        <span>Jak wygląda onboarding i ile czasu zajmie mojemu teamowi?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer"><div class="faq-answer-inner">
+        Onboarding trwa <strong>1–2 tygodnie</strong> i wymaga od Ciebie łącznie około 3–4 godzin:
+        <ul>
+          <li>Kick-off call (60 min) — poznajemy biznes, cele, historię</li>
+          <li>Dostępy: Google Search Console, Analytics, Ads — 20 minut</li>
+          <li>Akceptacja briefu i strategii — jedno czytanie + feedback</li>
+          <li>Weryfikacja pierwszych treści przed publikacją</li>
+        </ul>
+        Potem comiesięczny raport + opcjonalny call statusowy. Resztą zajmujemy się sami.
+      </div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        <span>Jaka jest minimalna długość umowy?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer"><div class="faq-answer-inner">
+        <strong>Umowy miesięczne z 30-dniowym wypowiedzeniem.</strong> Nie stosujemy lock-inów na 6 czy 12 miesięcy. Rozumiemy jednak, że SEO to maraton — efekty budują się przez miesiące. Dlatego na starcie prosimy o danie szansy minimum 3–4 miesięcy zanim ocenisz wyniki. Jeśli po tym czasie nie widzisz kierunku wzrostu — rozmawiamy otwarcie co poszło nie tak.
+      </div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        <span>Czy pracujecie tylko z dużymi firmami?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer"><div class="faq-answer-inner">
+        Pracujemy z firmami których <strong>budżet marketingowy online wynosi minimum 2 500 PLN miesięcznie</strong>. Nie dlatego że małe firmy nas nie interesują — ale poniżej tej kwoty nie jesteśmy w stanie dostarczyć działań, które realnie zmienią wyniki. Lepiej powiedzieć to wprost niż brać budżet i nie dowozić. Wśród naszych klientów są zarówno firmy 5-osobowe jak i spółki z przychodem 50M+ PLN.
+      </div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        <span>Jak mierzycie sukces i co jest w raporcie?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer"><div class="faq-answer-inner">
+        KPI ustalamy na etapie strategii — dopasowane do Twojego modelu biznesowego. Raport miesięczny zawiera:
+        <ul>
+          <li>Pozycje na ustalonych frazach kluczowych (trend vs poprzedni miesiąc)</li>
+          <li>Ruch organiczny i płatny (sesje, nowi użytkownicy)</li>
+          <li>Konwersje: zapytania ofertowe, leady, transakcje</li>
+          <li>ROAS z kampanii Google Ads (jeśli prowadzimy)</li>
+          <li>Zrealizowane działania w tym miesiącu</li>
+          <li>Plan na kolejny miesiąc</li>
+        </ul>
+        Format: PDF lub Google Slides — zależy od Twojej preferencji.
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- DNS vs OTHERS -->
+<section class="s" id="dlaczego-dns">
+  <div class="s-label">Dlaczego DNS</div>
+  <div class="reveal">
+    <h2 class="s-title">Freelancer, in-house<br><span class="accent-lime">czy agencja — co wybrać?</span></h2>
+    <p class="s-sub">Każda opcja ma sens w innym kontekście. Zestawiamy uczciwie — łącznie z przypadkami gdy DNS nie jest najlepszym wyborem.</p>
+  </div>
+  <div class="comparison-table reveal">
+    <div class="comparison-header">
+      <div class="comparison-col-header">Kryterium</div>
+      <div class="comparison-col-header dns">DNS Group ✦</div>
+      <div class="comparison-col-header">Freelancer</div>
+      <div class="comparison-col-header">In-house</div>
+    </div>
+    <div class="comparison-row">
+      <div class="comparison-cell criterion">Koszt miesięczny</div>
+      <div class="comparison-cell dns yes">2 500–10 000 PLN</div>
+      <div class="comparison-cell partial">1 500–5 000 PLN</div>
+      <div class="comparison-cell no">8 000–15 000 PLN (etat + narzędzia)</div>
+    </div>
+    <div class="comparison-row">
+      <div class="comparison-cell criterion">Zakres kompetencji</div>
+      <div class="comparison-cell dns yes">Full-stack: SEO + Ads + Dev + Content</div>
+      <div class="comparison-cell partial">Zazwyczaj 1–2 specjalizacje</div>
+      <div class="comparison-cell partial">Zależy od osoby, trudno pokryć wszystko</div>
+    </div>
+    <div class="comparison-row">
+      <div class="comparison-cell criterion">Ciągłość obsługi</div>
+      <div class="comparison-cell dns yes">Zawsze — backup team przy urlopie/chorobie</div>
+      <div class="comparison-cell no">Ryzyko: choroba, urlop, odejście</div>
+      <div class="comparison-cell partial">Ryzyko rotacji pracowników</div>
+    </div>
+    <div class="comparison-row">
+      <div class="comparison-cell criterion">Znajomość rynku i branży</div>
+      <div class="comparison-cell dns yes">90+ branż, aktualna wiedza z wielu klientów</div>
+      <div class="comparison-cell partial">Wąska specjalizacja lub szeroka, płytka wiedza</div>
+      <div class="comparison-cell yes">Głęboka znajomość Twojej firmy</div>
+    </div>
+    <div class="comparison-row">
+      <div class="comparison-cell criterion">Narzędzia (Ahrefs, SEMrush, etc.)</div>
+      <div class="comparison-cell dns yes">Wliczone w cenę (koszt ~3 000 PLN/mies)</div>
+      <div class="comparison-cell partial">Często osobno lub tańsze alternatywy</div>
+      <div class="comparison-cell no">Dodatkowy koszt 2 000–4 000 PLN/mies</div>
+    </div>
+    <div class="comparison-row">
+      <div class="comparison-cell criterion">Skalowalność zasobów</div>
+      <div class="comparison-cell dns yes">Elastycznie — zwiększamy zakres bez rekrutacji</div>
+      <div class="comparison-cell no">Ograniczona pojemność jednej osoby</div>
+      <div class="comparison-cell no">Rekrutacja trwa 2–4 miesiące</div>
+    </div>
+    <div class="comparison-row">
+      <div class="comparison-cell criterion">Kiedy to NIE jest dobry wybór</div>
+      <div class="comparison-cell dns no">Budżet poniżej 2 500 PLN — za mało żeby dowieźć wyniki</div>
+      <div class="comparison-cell no">Gdy potrzebujesz full-stack i ciągłości</div>
+      <div class="comparison-cell no">Startup lub firma bez stabilnego budżetu HR</div>
+    </div>
+  </div>
+  <div style="margin-top:40px;display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border)" class="reveal">
+    <div style="background:rgba(0,245,228,.04);padding:32px 36px;border:none">
+      <div style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--lime);margin-bottom:12px">DNS Group sprawdzi się gdy</div>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:8px">
+        <li style="font-size:13px;color:rgba(240,244,255,.7);display:flex;gap:10px"><span style="color:var(--lime);flex-shrink:0">✓</span>Potrzebujesz wielu kompetencji naraz (SEO + Ads + Dev)</li>
+        <li style="font-size:13px;color:rgba(240,244,255,.7);display:flex;gap:10px"><span style="color:var(--lime);flex-shrink:0">✓</span>Zależy Ci na wynikach, nie na obecności kogoś w biurze</li>
+        <li style="font-size:13px;color:rgba(240,244,255,.7);display:flex;gap:10px"><span style="color:var(--lime);flex-shrink:0">✓</span>Budżet 2 500–15 000 PLN/mies na obsługę marketingu</li>
+        <li style="font-size:13px;color:rgba(240,244,255,.7);display:flex;gap:10px"><span style="color:var(--lime);flex-shrink:0">✓</span>Chcesz delegować i nie mikrozarządzać</li>
+      </ul>
+    </div>
+    <div style="background:rgba(255,61,90,.03);padding:32px 36px;border:none">
+      <div style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--coral);margin-bottom:12px">Lepiej wybrać inną opcję gdy</div>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:8px">
+        <li style="font-size:13px;color:rgba(240,244,255,.55);display:flex;gap:10px"><span style="color:var(--coral);flex-shrink:0">→</span>Budżet poniżej 2 500 PLN — rozważ freelancera</li>
+        <li style="font-size:13px;color:rgba(240,244,255,.55);display:flex;gap:10px"><span style="color:var(--coral);flex-shrink:0">→</span>Potrzebujesz kogoś na miejscu w biurze codziennie</li>
+        <li style="font-size:13px;color:rgba(240,244,255,.55);display:flex;gap:10px"><span style="color:var(--coral);flex-shrink:0">→</span>Chcesz tylko jednej wąskiej specjalizacji np. tylko copywriting</li>
+        <li style="font-size:13px;color:rgba(240,244,255,.55);display:flex;gap:10px"><span style="color:var(--coral);flex-shrink:0">→</span>Szukasz najtańszej opcji — jakość ma swoją cenę</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ANTI-OBJECTION -->
+<section class="s s-bg" id="miałem-agencję">
+  <div class="s-label">Najczęstsze obiekcje</div>
+  <div class="reveal">
+    <h2 class="s-title">„Miałem już agencję.<br><span class="accent-coral" style="color:var(--coral)">Nie działało."</span></h2>
+    <p class="s-sub">To najczęstsze zdanie jakie słyszymy. I mamy na nie konkretną odpowiedź — nie obietnicę.</p>
+  </div>
+  <div class="objection-grid">
+    <div class="objection-card reveal" style="--accent:var(--cyan)">
+      <div class="objection-myth">
+        <div class="objection-myth-icon">💬</div>
+        <div><div class="objection-myth-label">Słyszałeś wcześniej</div>
+        <div class="objection-myth-text">„Efekty SEO widać po 6 miesiącach." I tyle — bez KPI, bez prognoz, bez odpowiedzialności za wynik.</div></div>
+      </div>
+      <div class="objection-reality">
+        <div class="objection-reality-icon">✓</div>
+        <div><div class="objection-reality-label">Jak to robimy</div>
+        <div class="objection-reality-text">W tygodniu 2 dostajesz plan z <strong>konkretnymi KPI i datami</strong>: ile fraz w Top 10 do kiedy, ile zapytań miesięcznie, jaki ROAS. Jeśli nie dowieziemy — rozmawiamy otwarcie dlaczego.</div></div>
+      </div>
+    </div>
+    <div class="objection-card reveal reveal-d1" style="--accent:var(--lime)">
+      <div class="objection-myth">
+        <div class="objection-myth-icon">💬</div>
+        <div><div class="objection-myth-label">Słyszałeś wcześniej</div>
+        <div class="objection-myth-text">„Podpisz umowę na 12 miesięcy." A potem agencja przestaje się starać, bo i tak masz obowiązek płacić.</div></div>
+      </div>
+      <div class="objection-reality">
+        <div class="objection-reality-icon">✓</div>
+        <div><div class="objection-reality-label">Jak to robimy</div>
+        <div class="objection-reality-text">Umowy miesięczne, wypowiedzenie z <strong>30-dniowym wyprzedzeniem</strong>. Zostajesz z nami bo widzisz wyniki — nie dlatego że prawnik mówi że musisz.</div></div>
+      </div>
+    </div>
+    <div class="objection-card reveal reveal-d2" style="--accent:var(--amber)">
+      <div class="objection-myth">
+        <div class="objection-myth-icon">💬</div>
+        <div><div class="objection-myth-label">Słyszałeś wcześniej</div>
+        <div class="objection-myth-text">„Mamy doświadczenie w Twojej branży." A potem okazuje się że opiekun zmienił się 3 razy i nikt nie zna Twojego biznesu.</div></div>
+      </div>
+      <div class="objection-reality">
+        <div class="objection-reality-icon">✓</div>
+        <div><div class="objection-reality-label">Jak to robimy</div>
+        <div class="objection-reality-text"><strong>Jeden senior opiekun przez cały czas współpracy.</strong> Zna Twój biznes, Twoją konkurencję, Twoje cele. Bez onboardingu od nowa co kwartał.</div></div>
+      </div>
+    </div>
+    <div class="objection-card reveal" style="--accent:var(--coral)">
+      <div class="objection-myth">
+        <div class="objection-myth-icon">💬</div>
+        <div><div class="objection-myth-label">Słyszałeś wcześniej</div>
+        <div class="objection-myth-text">„Ruch wzrósł o 200%!" — w raporcie. Ale zapytań ofertowych jakoś nie przybyło. Ruch ≠ biznes.</div></div>
+      </div>
+      <div class="objection-reality">
+        <div class="objection-reality-icon">✓</div>
+        <div><div class="objection-reality-label">Jak to robimy</div>
+        <div class="objection-reality-text">Raportujemy <strong>zapytania ofertowe, leady i przychód</strong> — nie sesje i wyświetlenia. Konfigurujemy śledzenie konwersji zanim zaczniemy jakiekolwiek działania.</div></div>
+      </div>
+    </div>
+    <div class="objection-card reveal reveal-d1" style="--accent:var(--cyan)">
+      <div class="objection-myth">
+        <div class="objection-myth-icon">💬</div>
+        <div><div class="objection-myth-label">Słyszałeś wcześniej</div>
+        <div class="objection-myth-text">„Tworzymy content wysokiej jakości." A teksty wyglądały jak napisane przez stażystę bez znajomości Twojej branży.</div></div>
+      </div>
+      <div class="objection-reality">
+        <div class="objection-reality-icon">✓</div>
+        <div><div class="objection-reality-label">Jak to robimy</div>
+        <div class="objection-reality-text">Przed napisaniem pierwszego tekstu robimy <strong>głęboki research branżowy</strong>. Każdy artykuł przechodzi Twoją akceptację. Jeśli nie brzmi jak ekspert z Twojej branży — piszemy od nowa.</div></div>
+      </div>
+    </div>
+    <div class="objection-card reveal reveal-d2" style="--accent:var(--lime)">
+      <div class="objection-myth">
+        <div class="objection-myth-icon">💬</div>
+        <div><div class="objection-myth-label">Słyszałeś wcześniej</div>
+        <div class="objection-myth-text">„Mamy dostęp do Twojego konta Ads." A po zakończeniu współpracy okazało się że konto jest na agencji i wszystkie historyczne dane zniknęły.</div></div>
+      </div>
+      <div class="objection-reality">
+        <div class="objection-reality-icon">✓</div>
+        <div><div class="objection-reality-label">Jak to robimy</div>
+        <div class="objection-reality-text"><strong>Konto Google Ads zawsze jest Twoje.</strong> My dostajemy dostęp jako menedżer. Przy zakończeniu współpracy — odbierasz dostęp, historia i dane zostają u Ciebie.</div></div>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:40px;padding:28px 36px;background:rgba(0,245,228,.04);border:1px solid rgba(0,245,228,.12);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px" class="reveal">
+    <div>
+      <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:20px;margin-bottom:6px">Masz inne pytania lub wątpliwości?</div>
+      <div style="font-size:14px;color:rgba(240,244,255,.5);font-weight:300">Napisz do nas bezpośrednio — odpowiemy bez owijania w bawełnę.</div>
+    </div>
+    <a href="#kontakt" class="btn-primary" style="font-size:13px;padding:13px 28px;white-space:nowrap">Porozmawiajmy otwarcie →</a>
+  </div>
+</section>
+
+<!-- LOGOS -->
+<div class="logos-section reveal">
+  <div class="logos-label">Zaufały nam firmy z 90+ branż — wybrane sektory</div>
+  <div class="logos-grid">
+    <div class="logo-cell"><div class="logo-cell-industry">Medycyna estetyczna</div><div class="logo-cell-name">Klinika Premium</div><div class="logo-cell-since">od 2021</div></div>
+    <div class="logo-cell"><div class="logo-cell-industry">E-commerce</div><div class="logo-cell-name">Sklep Elektroniczny</div><div class="logo-cell-since">od 2020</div></div>
+    <div class="logo-cell"><div class="logo-cell-industry">Nieruchomości</div><div class="logo-cell-name">Deweloper Premium</div><div class="logo-cell-since">od 2022</div></div>
+    <div class="logo-cell"><div class="logo-cell-industry">Prawo</div><div class="logo-cell-name">Kancelaria M&A</div><div class="logo-cell-since">od 2023</div></div>
+    <div class="logo-cell"><div class="logo-cell-industry">Przemysł B2B</div><div class="logo-cell-name">Producent Metal.</div><div class="logo-cell-since">od 2019</div></div>
+    <div class="logo-cell"><div class="logo-cell-industry">Stomatologia</div><div class="logo-cell-name">Sieć Dental</div><div class="logo-cell-since">od 2022</div></div>
+  </div>
+  <p style="text-align:center;font-family:'Space Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:20px">Nazwy klientów zanonimizowane na ich prośbę · Referencje dostępne po kontakcie</p>
+</div>
+
 <!-- CONTACT -->
 <section class="s" id="kontakt">
   <div class="s-label">Kontakt</div>
   <div class="contact-grid">
     <div class="reveal">
-      <h2 class="s-title">Zacznij od<br><span class="accent-lime">bezpłatnego audytu</span></h2>
-      <p style="font-size:16px;line-height:1.75;color:rgba(240,244,255,.55);font-weight:300;margin-bottom:36px">W ciągu 48 godzin dostajesz konkretną diagnozę: co blokuje Twój wzrost w Google i co zrobić w pierwszej kolejności. Zero zobowiązań.</p>
-      <div class="contact-promise">
+      <h2 class="s-title" id="contactTitle">Zacznij od<br><span class="accent-lime">bezpłatnego audytu</span></h2>
+      <p style="font-size:16px;line-height:1.75;color:rgba(240,244,255,.55);font-weight:300;margin-bottom:36px" id="contactSubtext">W ciągu 48 godzin dostajesz konkretną diagnozę: co blokuje Twój wzrost w Google i co zrobić w pierwszej kolejności. Zero zobowiązań.</p>
+      <div class="contact-promise" id="contactPromises">
         <div class="contact-promise-item"><div class="contact-promise-icon">⏱</div><div class="contact-promise-text"><strong>Odpowiedź w 24 godziny.</strong> Nie za tydzień, nie "wkrótce". Następny dzień roboczy.</div></div>
         <div class="contact-promise-item"><div class="contact-promise-icon">🔍</div><div class="contact-promise-text"><strong>Audyt bez wciskania.</strong> Pokazujemy co nie działa — niezależnie od tego czy zdecydujesz się na współpracę.</div></div>
         <div class="contact-promise-item"><div class="contact-promise-icon">📋</div><div class="contact-promise-text"><strong>Konkretna wycena.</strong> Nie "zależy", nie "do ustalenia". Cennik jasny już na pierwszym spotkaniu.</div></div>
@@ -915,13 +1843,13 @@ footer{position:relative;z-index:10;padding:48px 64px 36px;border-top:1px solid 
     <div class="reveal reveal-d1">
       <form onsubmit="submitForm(event)">
         <div class="form-row">
-          <div class="form-group"><label class="form-label">Imię i nazwisko</label><input class="form-input" type="text" placeholder="Jan Kowalski" required></div>
-          <div class="form-group"><label class="form-label">Email firmowy</label><input class="form-input" type="email" placeholder="jan@firma.pl" required></div>
+          <div class="form-group"><label class="form-label">Imię i nazwisko</label><input class="form-input" type="text" name="from_name" id="fieldName" placeholder="Jan Kowalski" required></div>
+          <div class="form-group"><label class="form-label">Email firmowy</label><input class="form-input" type="email" name="from_email" id="fieldEmail" placeholder="jan@firma.pl" required></div>
         </div>
         <div class="form-row">
-          <div class="form-group"><label class="form-label">Firma / Strona WWW</label><input class="form-input" placeholder="firma.pl"></div>
+          <div class="form-group"><label class="form-label">Firma / Strona WWW</label><input class="form-input" name="firma" id="fieldFirma" placeholder="firma.pl"></div>
           <div class="form-group"><label class="form-label">Budżet miesięczny</label>
-            <select class="form-select">
+            <select class="form-select" name="budzet" id="fieldBudzet">
               <option value="">Orientacyjny zakres</option>
               <option>do 2.000 PLN</option><option>2.000–5.000 PLN</option>
               <option>5.000–15.000 PLN</option><option>powyżej 15.000 PLN</option>
@@ -929,7 +1857,7 @@ footer{position:relative;z-index:10;padding:48px 64px 36px;border-top:1px solid 
           </div>
         </div>
         <div class="form-group"><label class="form-label">Główny problem do rozwiązania</label>
-          <textarea class="form-textarea" placeholder="Np. jesteśmy niewidoczni w Google mimo 5 lat działalności. Konkurencja nas wyprzedza na wszystkich frazach..."></textarea>
+          <textarea class="form-textarea" id="formTextarea" name="message" placeholder="Np. jesteśmy niewidoczni w Google mimo 5 lat działalności. Konkurencja nas wyprzedza na wszystkich frazach..."></textarea>
         </div>
         <button type="submit" class="form-submit"><span id="submitText">Zamów bezpłatny audyt</span><span>→</span></button>
         <p class="form-note">Odpowiadamy w ciągu 24h · Bez spamu · RODO compliant · Audyt bezpłatny i bez zobowiązań</p>
@@ -937,6 +1865,15 @@ footer{position:relative;z-index:10;padding:48px 64px 36px;border-top:1px solid 
     </div>
   </div>
 </section>
+
+<!-- STICKY CTA BAR -->
+<div class="sticky-bar" id="stickyBar">
+  <div class="sticky-bar-text"><strong>Bezpłatny audyt SEO i Google Ads</strong> — dowiedz się co blokuje Twój wzrost. Odpowiadamy w 24h.</div>
+  <div class="sticky-bar-actions">
+    <a href="#kontakt" class="btn-primary" style="font-size:13px;padding:12px 24px" onclick="hideStickyBar()">Zamów audyt →</a>
+    <button class="sticky-bar-dismiss" onclick="hideStickyBar()">✕</button>
+  </div>
+</div>
 
 <!-- FOOTER -->
 <footer>
@@ -947,6 +1884,7 @@ footer{position:relative;z-index:10;padding:48px 64px 36px;border-top:1px solid 
       <a href="#branże">Branże</a>
       <a href="#proces">Proces</a>
       <a href="#realizacje">Realizacje</a>
+      <a href="#miałem-agencję">Obiekcje</a>
       <a href="#opinie">Opinie</a>
       <a href="#kontakt">Kontakt</a>
     </div>
@@ -991,17 +1929,282 @@ function switchPersona(idx){
   document.querySelectorAll('.persona-panel').forEach((p,i)=>{p.classList.toggle('active',i===idx);if(i===idx){p.style.animation='none';p.offsetHeight;p.style.animation=''}});
 }
 
-// ── FORM ──
-function submitForm(e){
-  e.preventDefault();
-  const btn=e.target.querySelector('.form-submit');
-  const txt=document.getElementById('submitText');
-  txt.textContent='Wysyłanie...';btn.style.opacity='.7';
+
+// ── PERSONA PROPAGATION ──
+const PERSONA_DATA = [
+  {
+    name: 'Właściciel MŚP',
+    indicator: 'Tryb: Właściciel MŚP',
+    heroCta: 'Sprawdź czy zarabiam na marketingu',
+    heroSecondary: 'Zobacz jak mierzę ROI',
+    contactTitle: 'Pokaż mi<br><span class="accent-lime">czy to się opłaca</span>',
+    contactSubtext: 'W ciągu 48h dostajesz konkretną diagnozę i szacowany zwrot z inwestycji dla Twojego rynku. Bez żargonu, bez zobowiązań.',
+    formPlaceholder: 'Np. prowadzę klinikę stomatologiczną w Krakowie. Strona istnieje od 5 lat, ale zapytań z Google prawie nie ma. Budżet ok. 3000 PLN/mies...',
+    submitText: 'Chcę wiedzieć czy to się opłaca →',
+    promises: [
+      {icon:'💰', title:'ROI na pierwszym spotkaniu.', desc:'Przychodzisz z numerami — wychodzisz z szacunkiem czy i kiedy inwestycja się zwróci.'},
+      {icon:'⏱', title:'Odpowiedź w 24 godziny.', desc:'Następny dzień roboczy. Nie "wkrótce", nie "damy znać".'},
+      {icon:'🔓', title:'Umowy miesięczne.', desc:'Zostajesz bo widzisz wyniki na koncie. Nie dlatego że prawnik mówi że musisz.'},
+      {icon:'📋', title:'Jeden raport, jedna liczba.', desc:'Ile zarobiłeś dzięki nam w tym miesiącu. Zero wykresów których nie rozumiesz.'},
+    ]
+  },
+  {
+    name: 'CEO / Prezes',
+    indicator: 'Tryb: CEO / Prezes',
+    heroCta: 'Zbudujmy kanał, który skaluje',
+    heroSecondary: 'Jak SEO buduje defensywną pozycję',
+    contactTitle: 'Porozmawiajmy<br><span class="accent-lime">o strategii wzrostu</span>',
+    contactSubtext: 'Pokazujemy jak marketing online może stać się skalowalnym kanałem pozyskiwania klientów — niezależnym od polecień i relacji.',
+    formPlaceholder: 'Np. skalujemy sprzedaż i chcemy uniezależnić się od poleceń. Firma B2B, 50 pracowników, wchodzimy w nowy segment rynku...',
+    submitText: 'Omówmy strategię →',
+    promises: [
+      {icon:'📈', title:'Strategia, nie kampania.', desc:'Budujemy aktywa SEO które pracują 24/7 i z czasem tańsze — nie kolejny wydatek który znika po wyłączeniu.'},
+      {icon:'🎯', title:'KPI powiązane z biznesem.', desc:'Cele mierzone w leadach i przychodzie — nie sesjach i impresjonach.'},
+      {icon:'📊', title:'Kwartalny raport strategiczny.', desc:'Do pokazania zarządowi lub inwestorom. Z trendami, pozycją vs. konkurencja i planem na kolejny kwartał.'},
+      {icon:'🔓', title:'Bez lock-inu.', desc:'Umowy miesięczne. Partnerstwo oparte na wynikach, nie na kontrakcie.'},
+    ]
+  },
+  {
+    name: 'CFO / Dyrektor Finansowy',
+    indicator: 'Tryb: CFO / Finanse',
+    heroCta: 'Pokaż mi ROAS i CAC',
+    heroSecondary: 'Jak mierzymy zwrot z marketingu',
+    contactTitle: 'Policz ze mną<br><span class="accent-lime">zwrot z inwestycji</span>',
+    contactSubtext: 'Zanim cokolwiek podpiszesz — przygotujemy prognozę CAC, ROAS i payback period dla Twojej branży i budżetu. Liczby najpierw.',
+    formPlaceholder: 'Np. wydajemy 10 000 PLN/mies na Ads, nie wiemy ile to generuje przychodu. Potrzebujemy pełnej atrybucji i czytelnego ROI raportu...',
+    submitText: 'Chcę prognozę ROI →',
+    promises: [
+      {icon:'📊', title:'Prognoza ROI przed startem.', desc:'Szacujemy CAC, ROAS i breakeven na podstawie Twojej branży i budżetu. Bez obietnic — z modelami finansowymi.'},
+      {icon:'🔍', title:'Pełna atrybucja od dnia 1.', desc:'Konfigurujemy śledzenie konwersji end-to-end zanim uruchomimy cokolwiek. Każda złotówka ma przypisany wynik.'},
+      {icon:'💳', title:'Zero ukrytych kosztów.', desc:'Stała opłata miesięczna. Żadnych % od budżetu reklamowego. Wiesz dokładnie za co płacisz.'},
+      {icon:'📋', title:'Raport dla zarządu co miesiąc.', desc:'Format gotowy do prezentacji. ROAS, CAC, przychód z kanałów — w jednym miejscu.'},
+    ]
+  },
+  {
+    name: 'Dyrektor Marketingu',
+    indicator: 'Tryb: Dyrektor Marketingu',
+    heroCta: 'Sprawdź jak pracujemy',
+    heroSecondary: 'Full-stack: SEO + Ads + Content + Dev',
+    contactTitle: 'Deleguj<br><span class="accent-lime">i nie sprawdzaj</span>',
+    contactSubtext: 'Traktujemy Cię jak partnera — nie klienta do obsłużenia. Dostajesz seniora który rozumie Twoje narzędzia i nie potrzebuje mikrozarządzania.',
+    formPlaceholder: 'Np. obecna agencja wymaga ciągłego nadzoru, content nie odpowiada ekspertyzie naszej firmy, brak proaktywności. Szukam partnera który przejmie inicjatywę...',
+    submitText: 'Sprawdź jak pracujemy →',
+    promises: [
+      {icon:'👤', title:'Senior opiekun — zawsze.', desc:'Jeden doświadczony specjalista przez cały czas współpracy. Zero juniorów na Twoim koncie, zero rotacji.'},
+      {icon:'⚡', title:'48h na każde pytanie.', desc:'Max czas odpowiedzi. W praktyce — kilka godzin. Nie "zapiszemy na backlog".'},
+      {icon:'🔧', title:'Full-stack bez granic.', desc:'SEO techniczne, content, Ads, optymalizacja strony — jeden team, pełna odpowiedzialność. Zero "to nie nasza działka".'},
+      {icon:'📅', title:'Weekly sync + raport bi-weekly.', desc:'Regularne spotkania statusowe + raporty co 2 tygodnie. Wiesz co robimy zanim zapytasz.'},
+    ]
+  }
+];
+
+let activePersona = 0;
+
+function switchPersona(idx) {
+  activePersona = idx;
+  // Tabs
+  document.querySelectorAll('.persona-tab').forEach((t,i) => t.classList.toggle('active', i===idx));
+  document.querySelectorAll('.persona-panel').forEach((p,i) => {
+    p.classList.toggle('active', i===idx);
+    if(i===idx){p.style.animation='none';p.offsetHeight;p.style.animation='';}
+  });
+
+  const d = PERSONA_DATA[idx];
+
+  // Indicator badge
+  const indicator = document.getElementById('personaIndicator');
+  const indicatorText = document.getElementById('personaIndicatorText');
+  if(indicator){
+    indicatorText.textContent = d.indicator;
+    indicator.style.display = 'block';
+    setTimeout(() => indicator.style.opacity = '1', 10);
+  }
+
+  // Hero CTA
+  const heroCtaText = document.getElementById('heroCtaText');
+  if(heroCtaText) animateText(heroCtaText, d.heroCta);
+
+  const heroSecondary = document.getElementById('heroSecondary');
+  if(heroSecondary) animateText(heroSecondary, d.heroSecondary);
+
+  // Contact section
+  const contactTitle = document.getElementById('contactTitle');
+  if(contactTitle){
+    contactTitle.style.opacity='0';
+    contactTitle.style.transform='translateY(8px)';
+    setTimeout(()=>{
+      contactTitle.innerHTML = d.contactTitle;
+      contactTitle.style.transition='opacity .4s,transform .4s';
+      contactTitle.style.opacity='1';
+      contactTitle.style.transform='translateY(0)';
+    },200);
+  }
+
+  const contactSubtext = document.getElementById('contactSubtext');
+  if(contactSubtext) animateText(contactSubtext, d.contactSubtext);
+
+  const formTextarea = document.getElementById('formTextarea');
+  if(formTextarea) formTextarea.placeholder = d.formPlaceholder;
+
+  const submitText = document.getElementById('submitText');
+  if(submitText) animateText(submitText, d.submitText);
+
+  // Contact promises
+  const promises = document.getElementById('contactPromises');
+  if(promises){
+    promises.style.opacity='0';
+    setTimeout(()=>{
+      promises.innerHTML = d.promises.map(p =>
+        `<div class="contact-promise-item">
+          <div class="contact-promise-icon">${p.icon}</div>
+          <div class="contact-promise-text"><strong>${p.title}</strong> ${p.desc}</div>
+        </div>`
+      ).join('');
+      promises.style.transition='opacity .5s';
+      promises.style.opacity='1';
+    },250);
+  }
+
+  // Sticky bar text
+  const stickyTexts = [
+    'Bezpłatny audyt + szacunek ROI — odpowiadamy w 24h.',
+    'Strategia wzrostu dopasowana do Twojej skali. Bezpłatna konsultacja.',
+    'Prognoza ROAS i CAC dla Twojego budżetu — bezpłatnie.',
+    'Senior specjalista bez mikrozarządzania. Sprawdź jak pracujemy.',
+  ];
+  const stickyBarText = document.querySelector('.sticky-bar-text');
+  if(stickyBarText) stickyBarText.innerHTML = `<strong>${d.name}:</strong> ${stickyTexts[idx]}`;
+}
+
+function animateText(el, newText){
+  el.style.opacity='0';
+  el.style.transform='translateY(6px)';
+  el.style.transition='opacity .3s,transform .3s';
   setTimeout(()=>{
-    txt.textContent='✓ Gotowe! Odezwiemy się w 24h';
-    btn.style.background='var(--lime)';btn.style.opacity='1';
-    setTimeout(()=>{txt.textContent='Zamów bezpłatny audyt';btn.style.background='var(--cyan)'},5000);
-  },1200);
+    el.textContent=newText;
+    el.style.opacity='1';
+    el.style.transform='translateY(0)';
+  },180);
+}
+
+
+
+// ── CASE STUDIES ──
+function toggleCase(id){
+  const el = document.getElementById(id);
+  const isOpen = el.classList.contains('open');
+  document.querySelectorAll('.case-full.open').forEach(c => c.classList.remove('open'));
+  if(!isOpen) el.classList.add('open');
+}
+
+// ── FAQ ──
+function toggleFaq(btn){
+  const item = btn.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if(!isOpen) item.classList.add('open');
+}
+
+// ── STICKY BAR ──
+let stickyDismissed=false;
+const stickyBar=document.getElementById('stickyBar');
+window.addEventListener('scroll',()=>{
+  if(stickyDismissed)return;
+  stickyBar.classList.toggle('visible',window.scrollY>600);
+},{passive:true});
+function hideStickyBar(){stickyDismissed=true;stickyBar.classList.remove('visible')}
+const contactSection=document.getElementById('kontakt');
+if(contactSection){const co2=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)stickyBar.classList.remove('visible');else if(!stickyDismissed&&window.scrollY>600)stickyBar.classList.add('visible')});},{threshold:.1});co2.observe(contactSection);}
+
+// ── FORM — EmailJS ──
+async function submitForm(e){
+  e.preventDefault();
+  const form = e.target;
+  const btn = form.querySelector('.form-submit');
+  const txt = document.getElementById('submitText');
+
+  // Walidacja
+  const name = document.getElementById('fieldName').value.trim();
+  const email = document.getElementById('fieldEmail').value.trim();
+  if(!name || !email){ 
+    showFormError('Uzupełnij imię i email.'); 
+    return; 
+  }
+
+  // Loading state
+  btn.disabled = true;
+  txt.textContent = 'Wysyłanie...';
+  btn.style.opacity = '.7';
+
+  // Zbierz dane persony
+  const personaNames = ['Właściciel MŚP','CEO / Prezes','CFO / Finanse','Dyrektor Marketingu'];
+  const personaName = personaNames[activePersona] || 'Nieznana';
+
+  const templateParams = {
+    from_name:  name,
+    from_email: email,
+    firma:      document.getElementById('fieldFirma').value || '—',
+    budzet:     document.getElementById('fieldBudzet').value || '—',
+    message:    document.getElementById('formTextarea').value || '—',
+    persona:    personaName,
+    page_url:   window.location.href,
+    sent_at:    new Date().toLocaleString('pl-PL'),
+    reply_to:   email,
+  };
+
+  // Sprawdź czy klucze skonfigurowane
+  if(EMAILJS_PUBLIC_KEY === 'TWOJ_PUBLIC_KEY'){
+    // Demo mode — pokaż sukces bez wysyłania
+    showFormSuccess(form, txt, btn);
+    console.log('EmailJS nie skonfigurowany — tryb demo. Dane:', templateParams);
+    return;
+  }
+
+  try {
+    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
+    showFormSuccess(form, txt, btn);
+    // Wyślij też potwierdzenie do klienta
+    try {
+      await emailjs.send(EMAILJS_SERVICE_ID, 'template_confirmation', {
+        to_name: name,
+        to_email: email,
+        from_name: 'DNS Group',
+      });
+    } catch(e){ /* potwierdzenie opcjonalne */ }
+  } catch(err) {
+    console.error('EmailJS error:', err);
+    btn.disabled = false;
+    txt.textContent = 'Zamów bezpłatny audyt';
+    btn.style.opacity = '1';
+    btn.style.background = 'var(--cyan)';
+    showFormError('Błąd wysyłania — napisz bezpośrednio na kontakt@dnsgroup.pl');
+  }
+}
+
+function showFormSuccess(form, txt, btn){
+  txt.textContent = '✓ Wysłano! Odezwiemy się w ciągu 24h';
+  btn.style.background = 'var(--lime)';
+  btn.style.opacity = '1';
+  btn.disabled = false;
+  // Reset po 6s
+  setTimeout(()=>{
+    txt.textContent = 'Zamów bezpłatny audyt';
+    btn.style.background = 'var(--cyan)';
+    form.reset();
+    // Usuń error jeśli był
+    const err = form.querySelector('.form-error');
+    if(err) err.remove();
+  }, 6000);
+}
+
+function showFormError(msg){
+  const existing = document.querySelector('.form-error');
+  if(existing) existing.remove();
+  const el = document.createElement('p');
+  el.className = 'form-error';
+  el.style.cssText = 'color:var(--coral);font-family:Space Mono,monospace;font-size:10px;letter-spacing:1px;text-align:center;margin-top:8px;padding:8px 12px;border:1px solid rgba(255,61,90,.3);background:rgba(255,61,90,.05)';
+  el.textContent = msg;
+  document.querySelector('.form-submit').after(el);
 }
 </script>
 </body>
